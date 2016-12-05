@@ -52,7 +52,7 @@ td{padding:10px;}
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#findproducts").click(function(){
-		$( "#contentdata").show();
+		$("#contentdata").show();
 		$("#contentdata").html("Loading...");
 		var urlval = $("#parameters").val().split("?");
 		urlval = urlval[1];
