@@ -1,8 +1,14 @@
+<? 
+error_reporting(1);
+ini_set("display_errors", 1);
+include_once("./includes/addons.php");
+ignore_user_abort(true);
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Form Finder</title>
+<title>HTML Brokenlink Finder</title>
 <script type="text/javascript">
 function SelectContent (el) {
 	
@@ -37,59 +43,99 @@ var elemToSelect = document.getElementById (el);
  }  
 }
 </script>
+
 </head>
 <body style="text-align:center; font-family:Arial, Helvetica, sans-serif; font-size:12px;">
-<h1>IWM Form Finder</h1>
+<h1>HTML Broken links Finder</h1>
 <?php
-error_reporting(0);
-ini_set("display_errors", 0);
 $targeturl = $_POST['urlverify'];
-if($_POST['stval'] == "") $startnumber = 1; else $startnumber = $_POST['stval'];
+$taginput = $_POST['tagname'];
+$seltagarr=array(
+				 array("img","Images"),
+				 array("a","A tag")
+				 );
+if($_POST['stval'] == "") {$startnumber = 1;} else {$startnumber = $_POST['stval'];}
 ?>
-<form action="./" method="post">
+<form action="./blfinder.php" method="post">
 <!--<input name="urlverify" type="text" value="<?php echo $targeturl?>" style="width:600px; border:1px solid #666;" />-->
-<textarea name="urlverify" cols="8" rows="10" wrap="hard" style="width:600px; border:1px solid #666;" ><?=$targeturl?></textarea><br /><br />Start Value = <input name="stval" type="text" value="<?=$startnumber?>" style="width:20px; border:1px solid #666;" /><br /><br />
-<input type="submit" value="Find Forms" />
+<textarea name="urlverify" cols="8" rows="10" wrap="hard" style="width:600px; border:1px solid #666;" ><?=$targeturl?></textarea><br /><br /><!--Start Value : <input name="stval" type="text" value="<?=$startnumber?>" style="width:20px; border:1px solid #666;" />-->
+Select the Tag to Audit : <?=createSelectBox($seltagarr,"tagname",$taginput)?><br /><br />
+<input type="submit" value="Find Tag Data" />
 </form> 
 <br /><br />
 <input type="button" value="Select Table" onclick="SelectContent('formtbl');"> 
 <?php
 if($targeturl != "" && $targeturl != NULL){
-
+$time_start = microtime(true);
 	$turl = trim($targeturl);
     $turl = explode ("\n", $turl);
-	$outputmain[0] = "<table id='formtbl' cellspacing='0' border='1' align='center' width='800'>";
+	$outputmain[0] = "<table id='formtbl' cellspacing='0' border='1' align='center' width='800'>\n<tr style='text-align:center;font-weight:bold;background:#CFC;'><td>Sno.</td><td >URL</td><td>Tagcount</td><td>Value</td></tr>";
 	$psno = $startnumber;
+	$badStatusCodes = array('308', '404');
     foreach ($turl as $purl) {
-		//getSiteMeta($targeturl);
+		if(connection_aborted()){endPacket();}else{
 		$scont = getSiteContent($purl);
-		
 		$domc = new DOMDocument();
 		$domc->loadHTML($scont);
-		
-		$links = $domc->getElementsByTagName('a');
-		$nol = countLinks($links); //Number of links
-		$nof = 1; //Number of Forms
-		$output = "";
-		
-		for($i=0;$i<$nol;$i++){
-			$atag = $domc->getElementsByTagName('a')->item($i);
-			$hrefval = $atag->attributes->getNamedItem('href')->value;
-			if(strpos($hrefval,'source=') && !strpos($hrefval,'source=swgmail') && !strpos($hrefval,'source=raq')){
-				$output .= "<tr><td height='25'></td><td style='text-align:left'>".$hrefval."</td><td></td></tr>";
-				$nof++;
+		//print_r($domc);
+		//print_r($domc);
+		$tagLinks = $domc->getElementsByTagName($taginput);
+		$notgs = $tagLinks->length;
+		$outputBad = "";
+		if($notgs != 0){
+			foreach($tagLinks as $currLink) {
+			  //LOOP THROUGH ATTRIBUTES FOR CURRENT LINK
+			  foreach($currLink->attributes as $attributeName=>$attributeValue) {
+				   //IF CURRENT ATTRIBUTE CONTAINS THE WEBSITE ADDRESS
+				   //print_r($currlink->attributes);
+				   if($attributeName == 'src') {
+						//INITIALIZE CURL AND TEST THE LINK
+						$ch = curl_init($attributeValue->value);
+						curl_setopt($ch, CURLOPT_NOBODY, true);
+						curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+						curl_exec($ch);
+						$returnCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+						curl_close($ch);
+	 
+						//TRACK THE RESPONSE
+						if(in_array($returnCode, $badStatusCodes)) {
+							 //$outputBad  .= 'name:'.$currLink->nodeValue.'<br><span style="color:#F00">link:'.$attributeValue->value.'</span><br><br>';
+							 $outputBad  .= '<span style="color:#F00">'.$attributeValue->value.'</span>';
+						} 
+				   }
+				}
 			}
 		}
+		//print_r($findtag);
+		/*$notgs = $findtag->length; //Number of tags
+		//$not = 1;
+		$tgn = 1; //Number of Forms
+		$output = "";
+		if($notgs != 0){
+		for($i=0;$i<$notgs;$i++){
+			foreach($currLink->attributes as $attributeName=>$attributeValue) {
+			$tagdata = $domc->getElementsByTagName($taginput)->item($i);
+			//print_r($tagdata);
+			$tagval = $tagdata->nodeValue;
+			$output .= $tagval."<br>";
+			$nof++;
+			}
 		if($nof == 1){$kkt = "bgcolor='#F00'";}
-		$outputmain[$psno] .= "<tr><td>".$psno."</td><td style='text-align:left;font-weight:bold;'>".$purl."</td><td ".$kkt.">".($nof-1)."</td></tr>".$output;
+		}*/
+		$outputmain[$psno] .= "<tr><td>".$psno."</td><td style='text-align:left;font-weight:bold;'>".$purl."</td><td>".$notgs."</td><td style='text-align:left;'>".$outputBad."</td></tr>";
+		
 		$kkt = "";
+		$scont = NULL;
+		$domc = NULL;
 		
 		//echo "Total Number of forms in this page:". $nof-1;
-		$psno++;
+		$psno++;}
 	}
 	$outputmain[$psno] = "</table>";
 	foreach($outputmain as $v) echo $v, PHP_EOL;
-
+$time_end = microtime(true);
+$execution_time = ($time_end - $time_start)/60;
+echo '<div style="position:absolute; top:0px; right:50px; border:1px solid #CCC;"><strong>Total Execution Time:</strong> '.$execution_time.' Mins</div>';
 //print_r($outputmain);
 }
 
@@ -106,8 +152,8 @@ function getSiteContent($url){
 		CURLOPT_AUTOREFERER => true,
 		CURLOPT_FOLLOWLOCATION => true,
 		CURLOPT_RETURNTRANSFER => true,
-		CURLOPT_COOKIEFILE => $cookie,
-		CURLOPT_COOKIEJAR => $cookie ,
+		//CURLOPT_COOKIEFILE => $cookie,
+		//CURLOPT_COOKIEJAR => $cookie ,
 		CURLOPT_SSL_VERIFYPEER => 0 ,
 		CURLOPT_SSL_VERIFYHOST => 0
 	);
