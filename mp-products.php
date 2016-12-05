@@ -52,6 +52,8 @@ td{padding:10px;}
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#findproducts").click(function(){
+		$( "#contentdata").show();
+		$("#contentdata").html("Loading...");
 		var urlval = $("#parameters").val().split("?");
 		urlval = urlval[1];
 		var cntry = $("#country").val();
@@ -69,11 +71,10 @@ $(document).ready(function(){
 					}
 				}
 				fulldata += '</table>';
-				$("#contentdata").append(fulldata);
+			  $("#contentdata").html("");
+			  $("#contentdata").append(fulldata);
 			  $( "#contentdata" ).prepend('<input type="button" value="Select Table" onclick="SelectContent(\'datatbl\');">'); 
 			  $( "#contentdata" ).prepend("<h2 style='text-align:left;'>Total number of products found: "+data["results"]["total"]+"<br>Total PDP's found: "+i+"</h2>");
-			  $( "#contentdata" ).show();
-			  //alert( "Load was performed." );
 			});
 			return false;
 		}else{
