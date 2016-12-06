@@ -52,18 +52,26 @@ td{padding:10px;}
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#findproducts").click(function(){
-		$("#contentdata").show();
-		$("#contentdata").html("Loading...");
-		var urlval = $("#parameters").val().split("?");
-		urlval = urlval[1];
+		$( "#contentdata").show();
+		$("#contentdata").html("Loading...<br>");
+		var urlval = $("#parameters").val();
 		var cntry = $("#country").val();
 		if(urlval !="" && cntry != 0){
-			var geturl = "//diver.mybluemix.net/marketplace/api/search/v2/api_search?"+urlval+"&locale="+cntry;
+			var maincount = 0;
+			var geturl = "";
+			urlval = $("#parameters").val().split("?");
+			urlval = urlval[1];
+			geturl = "//diver.mybluemix.net/marketplace/api/search/v2/api_search?"+urlval+"&locale="+cntry;
+			//alert(geturl);
+			$.get(geturl, function( data ) {
+				maincount = data["results"]["total"];
+				geturl = "//diver.mybluemix.net/marketplace/api/search/v2/api_search?"+urlval+"&locale="+cntry+"&limit="+maincount+"&fromPosition=0";
+				$("#contentdata").append("Total of "+maincount+" found... Loading takes some time. Please wait...");
+			});
 			//alert(geturl);
 			$.get( geturl, function( data ) {
 			  //alert(data["results"]["items"][1]["doc"]["contact"].toSource());
 				var fulldata = '<table id="datatbl" border="1" cellpadding="0" cellspacing="0">';
-				var maincount = data["results"]["total"];
 				for(var i=0;i<maincount;i++)
 				{
 					if(typeof data["results"]["items"][i] !== 'undefined'){
@@ -74,12 +82,14 @@ $(document).ready(function(){
 			  $("#contentdata").html("");
 			  $("#contentdata").append(fulldata);
 			  $( "#contentdata" ).prepend('<input type="button" value="Select Table" onclick="SelectContent(\'datatbl\');">'); 
-			  $( "#contentdata" ).prepend("<h2 style='text-align:left;'>Total number of products found: "+data["results"]["total"]+"<br>Total PDP's found: "+i+"</h2>");
+			  $( "#contentdata" ).prepend("<h2 style='text-align:left;'>Total number of products found: "+maincount+"</h2>");
 			});
 			return false;
 		}else{
 			alert("URL & Country cannot be empty");
+			return false;
 		}
+		
 	});
 });
 
