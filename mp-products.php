@@ -56,33 +56,35 @@ $(document).ready(function(){
 		$("#contentdata").html("Loading...<br>");
 		var urlval = $("#parameters").val();
 		var cntry = $("#country").val();
+		
 		if(urlval !="" && cntry != 0){
 			var maincount = 0;
 			var geturl = "";
+			var geturl1 = "";
 			urlval = $("#parameters").val().split("?");
 			urlval = urlval[1];
 			geturl = "//diver.mybluemix.net/marketplace/api/search/v2/api_search?"+urlval+"&locale="+cntry;
 			//alert(geturl);
-			$.get(geturl, function( data ) {
-				maincount = data["results"]["total"];
-				geturl = "//diver.mybluemix.net/marketplace/api/search/v2/api_search?"+urlval+"&locale="+cntry+"&limit="+maincount+"&fromPosition=0";
+			$.get(geturl, function( valdata ) {
+				maincount = valdata["results"]["total"];
+				//alert(geturl);
 				$("#contentdata").append("Total of "+maincount+" found... Loading takes some time. Please wait...");
-			});
-			//alert(geturl);
-			$.get( geturl, function( data ) {
-			  //alert(data["results"]["items"][1]["doc"]["contact"].toSource());
-				var fulldata = '<table id="datatbl" border="1" cellpadding="0" cellspacing="0">';
-				for(var i=0;i<maincount;i++)
-				{
-					if(typeof data["results"]["items"][i] !== 'undefined'){
-					fulldata += '<tr><td>'+(i+1)+'</td><td>'+data["results"]["items"][i]["doc"]["name"]+'</td><td>'+data["results"]["items"][i]["doc"]["url"]+'</td>';
+				geturl1 = "//diver.mybluemix.net/marketplace/api/search/v2/api_search?"+urlval+"&locale="+cntry+"&limit="+maincount+"&sortBy=_score&productType=product&fromPosition=0";
+					$.get( geturl1, function( data ) {
+				  //alert(data["results"]["items"][1]["doc"]["contact"].toSource());
+					var fulldata = '<table id="datatbl" border="1" cellpadding="0" cellspacing="0">';
+					for(var i=0;i<maincount;i++)
+					{
+						if(typeof data["results"]["items"][i] !== 'undefined'){
+						fulldata += '<tr><td>'+(i+1)+'</td><td>'+data["results"]["items"][i]["doc"]["name"]+'</td><td>'+data["results"]["items"][i]["doc"]["url"]+'</td>';
+						}
 					}
-				}
-				fulldata += '</table>';
-			  $("#contentdata").html("");
-			  $("#contentdata").append(fulldata);
-			  $( "#contentdata" ).prepend('<input type="button" value="Select Table" onclick="SelectContent(\'datatbl\');">'); 
-			  $( "#contentdata" ).prepend("<h2 style='text-align:left;'>Total number of products found: "+maincount+"</h2>");
+					fulldata += '</table>';
+				  $("#contentdata").html("");
+				  $("#contentdata").append(fulldata);
+				  $( "#contentdata" ).prepend('<input type="button" value="Select Table" onclick="SelectContent(\'datatbl\');">'); 
+				  $( "#contentdata" ).prepend("<h2 style='text-align:left;'>Total number of products found: "+maincount+"</h2>");
+				});
 			});
 			return false;
 		}else{
