@@ -26,18 +26,33 @@ td{padding:10px;}
 <label>Select country</label><br>
 <select id="country">
 <option value="0">Select Country</option>
-<option value="en-in">India</option>
-<option value="en-au">Australia</option>
-<option value="en-nz">New Zealand</option>
-<option value="en-sg">Singapore</option>
-<option value="en-my">Malaysia</option>
-<option value="en-id">Indonesia</option>
-<option value="en-th">Thailand</option>
-<option value="en-vn">Vietnam</option>
-<option value="en-ph">Phillipines</option>
-<option value="en-za">South Africa</option>
-<option value="en-ae">UAE</option>
-
+<option value="en-in">AP-India</option>
+<option value="en-au">AP-Australia</option>
+<option value="en-nz">AP-New Zealand</option>
+<option value="en-sg">AP-Singapore</option>
+<option value="en-my">AP-Malaysia</option>
+<option value="en-id">AP-Indonesia</option>
+<option value="en-th">AP-Thailand</option>
+<option value="en-vn">AP-Vietnam</option>
+<option value="en-ph">AP-Phillipines</option>
+<option value="fr-fr">AP-Korea</option>
+<option value="ja-jp">Japan-Japan</option>
+<option value="en-za">MEA-South Africa</option>
+<option value="en-ae">MEA-UAE</option>
+<option value="fr-fr">Europe-France</option>
+<option value="de-de">Europe-Germany</option>
+<option value="it-it">Europe-Italy</option>
+<option value="es-es">Europe-Spain</option>
+<option value="pt-br">Europe-Brazil</option>
+<option value="fr-fr">Europe-France</option>
+<option value="tr-tr">Europe-Turkey</option>
+<option value="ru-ru">Europe-Russia</option>
+<option value="pl-pl">Europe-France</option>
+<option value="en-us">NA-USA</option>
+<option value="fr-ca">NA-Canada(french)</option>
+<option value="zh-cn">China-China</option>
+<option value="zh-tw">China-Taiwan</option>
+<option value="es-mx">SA-Mexico</option>
 </select><br>
 <button id="findproducts">Find PDP List</button>
 </form>
@@ -73,10 +88,14 @@ $(document).ready(function(){
 					$.get( geturl1, function( data ) {
 				  //alert(data["results"]["items"][1]["doc"]["contact"].toSource());
 					var fulldata = '<table id="datatbl" border="1" cellpadding="0" cellspacing="0">';
+					fulldata +='<tr><th>Sno</th><th>Product Name</th><th>Product URL</th><th>Purchasable</th></tr>';
+					var purchasable = "No";
 					for(var i=0;i<maincount;i++)
 					{
 						if(typeof data["results"]["items"][i] !== 'undefined'){
-						fulldata += '<tr><td>'+(i+1)+'</td><td>'+data["results"]["items"][i]["doc"]["name"]+'</td><td>'+data["results"]["items"][i]["doc"]["url"]+'</td>';
+							if(typeof data["results"]["items"][i]["doc"]["commerce"] != 'undefined'){purchasable = "Yes";}
+							fulldata += '<tr><td>'+(i+1)+'</td><td>'+data["results"]["items"][i]["doc"]["name"]+'</td><td>'+data["results"]["items"][i]["doc"]["url"]+'</td><td>'+purchasable+'</td>';
+							purchasable = "No";
 						}
 					}
 					fulldata += '</table>';
