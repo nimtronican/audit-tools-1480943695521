@@ -96,7 +96,6 @@ $(document).ready(function(){
 						if(typeof data["results"]["items"][i] !== 'undefined'){
 							
 							if(typeof data["results"]["items"][i]["doc"]["commerce"] != 'undefined'){purchasable = "Yes";}
-							if(
 							fulldata += '<tr><td>'+(i+1)+'</td><td>'+data["results"]["items"][i]["doc"]["name"]+'</td><td>'+data["results"]["items"][i]["doc"]["url"]+'</td><td>'+purchasable+'</td>';
 							purchasable = "No";
 						}
