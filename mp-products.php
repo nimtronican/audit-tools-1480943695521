@@ -78,13 +78,14 @@ $(document).ready(function(){
 			var geturl1 = "";
 			urlval = $("#parameters").val().split("?");
 			urlval = urlval[1];
-			geturl = "//diver.mybluemix.net/marketplace/api/search/v2/api_search?"+urlval+"&locale="+cntry;
+			geturl = "//diver.mybluemix.net/marketplace/api/search/v2/api_search?"+urlval+"&productType=product&locale="+cntry;
 			//alert(geturl);
 			$.get(geturl, function( valdata ) {
 				maincount = valdata["results"]["total"];
 				//alert(geturl);
 				$("#contentdata").append("Total of "+maincount+" found... Loading takes some time. Please wait...");
-				geturl1 = "//diver.mybluemix.net/marketplace/api/search/v2/api_search?"+urlval+"&locale="+cntry+"&limit="+maincount+"&sortBy=_score&productType=product&fromPosition=0";
+				geturl1 = "//diver.mybluemix.net/marketplace/api/search/v2/api_search?"+urlval+"&locale="+cntry+"&limit="+maincount+"&sortBy=doc.name.raw&sortOrder=asc&productType=product&fromPosition=0";
+				//alert(geturl1);
 					$.get( geturl1, function( data ) {
 				  //alert(data["results"]["items"][1]["doc"]["contact"].toSource());
 					var fulldata = '<table id="datatbl" border="1" cellpadding="0" cellspacing="0">';
@@ -93,7 +94,9 @@ $(document).ready(function(){
 					for(var i=0;i<maincount;i++)
 					{
 						if(typeof data["results"]["items"][i] !== 'undefined'){
+							
 							if(typeof data["results"]["items"][i]["doc"]["commerce"] != 'undefined'){purchasable = "Yes";}
+							if(
 							fulldata += '<tr><td>'+(i+1)+'</td><td>'+data["results"]["items"][i]["doc"]["name"]+'</td><td>'+data["results"]["items"][i]["doc"]["url"]+'</td><td>'+purchasable+'</td>';
 							purchasable = "No";
 						}
