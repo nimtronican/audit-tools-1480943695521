@@ -53,6 +53,8 @@ td{padding:10px;}
 <option value="zh-cn">China-China</option>
 <option value="zh-tw">China-Taiwan</option>
 <option value="es-mx">SA-Mexico</option>
+<option value="en-uk">UK</option>
+<option value="en-nl">Dutch</option>
 </select><br>
 <button id="findproducts">Find PDP List</button>
 </form>
