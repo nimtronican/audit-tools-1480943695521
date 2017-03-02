@@ -23,7 +23,7 @@ td{padding:10px;}
 <div id="inputdata" style="width:80%; padding:20px 10%; text-align:center; border:1px solid #CCC;background:#FFF9F9;font-size:14px;">
 <form id="urlparameters">
 <label><strong>Enter the Category Search URL</strong><br></label>Example: https://www.ibm.com/marketplace/search/sg/en-sg?category[]=Commerce<br>(or)<br>
-<strong>Enter the Search Term URL</strong><br></label>Example: https://www.ibm.com/marketplace/search/sg/en-sg?terms=watson<br>
+<label><strong>Enter the Search Term URL</strong><br></label>Example: https://www.ibm.com/marketplace/search/sg/en-sg?terms=watson<br>
 <input id="parameters" type="text" value="" style="width:100%;" /><br><br>
 <label>Select country</label><br>
 <select id="country">
@@ -45,7 +45,11 @@ td{padding:10px;}
 <option value="en-eg">MEA-Egypt</option>
 <option value="zh-cn">China-China</option>
 <option value="zh-tw">China-Taiwan</option>
-<option value="es-mx">SA-Mexico</option>
+<option value="es-mx">SSA-Mexico</option>
+<option value="es-ar">SSA-Argentina</option>
+<option value="es-co">SSA-Colombia</option>
+<option value="es-cl">SSA-Chile</option>
+<option value="es-pe">SSA-Perú</option>
 <option value="fr-fr">Europe-France</option>
 <option value="de-de">Europe-Germany</option>
 <option value="it-it">Europe-Italy</option>
@@ -54,9 +58,9 @@ td{padding:10px;}
 <option value="fr-fr">Europe-France</option>
 <option value="tr-tr">Europe-Turkey</option>
 <option value="ru-ru">Europe-Russia</option>
-<option value="pl-pl">Europe-France</option>
+<option value="pl-pl">Europe-Portugal</option>
 <option value="en-uk">Europe-UK</option>
-<option value="en-nl">Europe-Dutch</option>
+<option value="en-nl">Europe-Netherlands</option>
 <option value="en-us">NA-USA</option>
 <option value="en-ca">NA-Canada(English)</option>
 <option value="fr-ca">NA-Canada(french)</option>
