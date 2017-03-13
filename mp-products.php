@@ -72,6 +72,7 @@ td{padding:10px;}
 <option value="en-jo">MEA-Jordan</option>
 <option value="en-lb">MEA-Lebanon</option>
 </select><br>
+<input type="checkbox" name="purchasable" id="purchasable" style="margin-top:20px;" /><label for="purchasable">Show only Purchasable Products</label><br>
 <button id="findproducts">Find PDP List</button>
 </form>
 </div>
@@ -90,7 +91,12 @@ $(document).ready(function(){
 		$("#contentdata").html("Loading...<br>");
 		var urlval = $("#parameters").val();
 		var cntry = $("#country").val();
-		
+		var purchflg = 0;
+		var tnopurch = 0;
+		if($('#purchasable').is(":checked")){
+			purchflg = 1;
+		}
+		//alert(purchflg);
 		if(urlval !="" && cntry != 0){
 			var maincount = 0;
 			var geturl = "";
@@ -103,6 +109,7 @@ $(document).ready(function(){
 				maincount = valdata["results"]["total"];
 				//alert(geturl);
 				$("#contentdata").append("Total of "+maincount+" found... Loading takes some time. Please wait...");
+				if(purchflg){$("#contentdata").append("<br>Listing the Purchasable products");}
 				geturl1 = "//diver.mybluemix.net/marketplace/api/search/v2/api_search?"+urlval+"&locale="+cntry+"&limit="+maincount+"&sortBy=doc.name.raw&sortOrder=asc&productType=product&fromPosition=0";
 				//alert(geturl1);
 					$.get( geturl1, function( data ) {
@@ -118,25 +125,51 @@ $(document).ready(function(){
 					{
 						if(typeof data["results"]["items"][i] !== 'undefined'){
 							
-							if(typeof data["results"]["items"][i]["doc"]["commerce"] != 'undefined'){purchasable = "Yes";}
-							fulldata += '<tr><td>'+(i+1)+'</td><td>'+data["results"]["items"][i]["doc"]["name"]+'</td><td>'+data["results"]["items"][i]["doc"]["url"]+'</td>';
-							if(typeof data["results"]["items"][i]["doc"]["taxonomy"]!= 'undefined'){
-								fulldata += '<td>'+data["results"]["items"][i]["doc"]["taxonomy"]+'</td>';
-							}else{
-								fulldata += '<td></td>';
+							if(typeof data["results"]["items"][i]["doc"]["commerce"] != 'undefined'){
+								if(typeof data["results"]["items"][i]["doc"]["commerce"][cntry_code]['startingAtOfferingInfoDetail'] != 'undefined'){
+								purchasable = "Yes";
+								}
 							}
-							if(typeof data["results"]["items"][i]["doc"]["category"]!= 'undefined'){
-								fulldata += '<td>'+data["results"]["items"][i]["doc"]["category"]+'</td>';
-							}else{
-								fulldata += '<td></td>';
+							if(purchflg && purchasable == "Yes"){
+								fulldata += '<tr><td>'+(tnopurch+1)+'</td><td>'+data["results"]["items"][i]["doc"]["name"]+'</td><td>'+data["results"]["items"][i]["doc"]["url"]+'</td>';
+								if(typeof data["results"]["items"][i]["doc"]["taxonomy"]!= 'undefined'){
+									fulldata += '<td>'+data["results"]["items"][i]["doc"]["taxonomy"]+'</td>';
+								}else{
+									fulldata += '<td></td>';
+								}
+								if(typeof data["results"]["items"][i]["doc"]["category"]!= 'undefined'){
+									fulldata += '<td>'+data["results"]["items"][i]["doc"]["category"]+'</td>';
+								}else{
+									fulldata += '<td></td>';
+								}
+								if(typeof data["results"]["items"][i]["doc"]["contact"]!= 'undefined'){
+									fulldata += '<td>'+data["results"]["items"][i]["doc"]["contact"][cntry_code]["priority"]+'</td>';
+									fulldata += '<td>'+data["results"]["items"][i]["doc"]["contact"][cntry_code]["contact-web-form"]+'</td>';
+								}else{
+									fulldata += '<td></td><td></td>';
+								}
+								fulldata += '<td>'+purchasable+'</td>';
+								tnopurch++;
+							}else if(!purchflg){
+								fulldata += '<tr><td>'+(i+1)+'</td><td>'+data["results"]["items"][i]["doc"]["name"]+'</td><td>'+data["results"]["items"][i]["doc"]["url"]+'</td>';
+								if(typeof data["results"]["items"][i]["doc"]["taxonomy"]!= 'undefined'){
+									fulldata += '<td>'+data["results"]["items"][i]["doc"]["taxonomy"]+'</td>';
+								}else{
+									fulldata += '<td></td>';
+								}
+								if(typeof data["results"]["items"][i]["doc"]["category"]!= 'undefined'){
+									fulldata += '<td>'+data["results"]["items"][i]["doc"]["category"]+'</td>';
+								}else{
+									fulldata += '<td></td>';
+								}
+								if(typeof data["results"]["items"][i]["doc"]["contact"]!= 'undefined'){
+									fulldata += '<td>'+data["results"]["items"][i]["doc"]["contact"][cntry_code]["priority"]+'</td>';
+									fulldata += '<td>'+data["results"]["items"][i]["doc"]["contact"][cntry_code]["contact-web-form"]+'</td>';
+								}else{
+									fulldata += '<td></td><td></td>';
+								}
+								fulldata += '<td>'+purchasable+'</td>';
 							}
-							if(typeof data["results"]["items"][i]["doc"]["contact"]!= 'undefined'){
-								fulldata += '<td>'+data["results"]["items"][i]["doc"]["contact"][cntry_code]["priority"]+'</td>';
-								fulldata += '<td>'+data["results"]["items"][i]["doc"]["contact"][cntry_code]["contact-web-form"]+'</td>';
-							}else{
-								fulldata += '<td></td><td></td>';
-							}
-							fulldata += '<td>'+purchasable+'</td>';
 							
 							purchasable = "No";
 							
@@ -147,6 +180,7 @@ $(document).ready(function(){
 				  $("#contentdata").append(fulldata);
 				  $( "#contentdata" ).prepend('<input type="button" id="selecttbl" value="Select Table" onclick="SelectContent(\'datatbl\');" />'); 
 				  $( "#contentdata" ).prepend('<input type="button" id="download" value="Download Table as Excel" onclick="downloadContent(\'datatbl\',\''+cntry_code+'\');">'); 
+				  if(purchflg)maincount = tnopurch + " purchasable products";
 				  $( "#contentdata" ).prepend("<h2 style='text-align:left;float:left;'>Total number of products found: "+maincount+"</h2>");
 				});
 			});
