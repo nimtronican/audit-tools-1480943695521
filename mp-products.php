@@ -61,6 +61,17 @@ td{padding:10px;}
 <option value="pl-pl">Europe-Portugal</option>
 <option value="en-uk">Europe-UK</option>
 <option value="en-nl">Europe-Netherlands</option>
+<option value='en-lv'>Europe-CEE-Latvia</option>
+<option value='en-ro'>Europe-CEE-Romania</option>
+<option value='en-hr'>Europe-CEE-Croatia</option>
+<option value='en-lt'>Europe-CEE-Lithuania</option>
+<option value='en-ee'>Europe-CEE-Estonia</option>
+<option value='en-cz'>Europe-CEE-Czech Republic</option>
+<option value='en-no'>Europe-Nordics-Norway</option>
+<option value='en-fi'>Europe-Nordics-Finland</option>
+<option value='en-da'>Europe-Nordics-Denmark</option>
+<option value='en-se'>Europe-Nordics-Sweden</option>
+<option value='en-ie'>Europe-UKI-Ireland</option>
 <option value="en-us">NA-USA</option>
 <option value="en-ca">NA-Canada(English)</option>
 <option value="fr-ca">NA-Canada(french)</option>
