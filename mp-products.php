@@ -60,6 +60,7 @@ td{padding:10px;}
 <option value="ru-ru">Europe-Russia</option>
 <option value="pl-pl">Europe-Portugal</option>
 <option value="en-uk">Europe-UK</option>
+<option value='pl-pl'>Europe-Poland</option>
 <option value="en-nl">Europe-Netherlands</option>
 <option value='en-lv'>Europe-CEE-Latvia</option>
 <option value='en-ro'>Europe-CEE-Romania</option>
