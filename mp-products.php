@@ -62,12 +62,16 @@ td{padding:10px;}
 <option value="en-uk">Europe-UK</option>
 <option value='pl-pl'>Europe-Poland</option>
 <option value="en-nl">Europe-Netherlands</option>
+<option value="en-be">Europe-Belgium</option>
+<option value="en-lu">Europe-Lexumburg</option>
 <option value='en-lv'>Europe-CEE-Latvia</option>
 <option value='en-ro'>Europe-CEE-Romania</option>
 <option value='en-hr'>Europe-CEE-Croatia</option>
 <option value='en-lt'>Europe-CEE-Lithuania</option>
 <option value='en-ee'>Europe-CEE-Estonia</option>
 <option value='en-cz'>Europe-CEE-Czech Republic</option>
+<option value='en-hu'>Europe-CEE-Hungary</option>
+<option value='en-az'>Europe-CEE-Azerbaijan</option>
 <option value='en-no'>Europe-Nordics-Norway</option>
 <option value='en-fi'>Europe-Nordics-Finland</option>
 <option value='en-dk'>Europe-Nordics-Denmark</option>
@@ -127,7 +131,7 @@ $(document).ready(function(){
 					$.get( geturl1, function( data ) {
 				  //alert(data["results"]["items"][1]["doc"]["contact"].toSource());
 					var fulldata = '<table id="datatbl" border="1" cellpadding="0" cellspacing="0">';
-					fulldata +='<tr><th>Sno</th><th>Product Name</th><th>Product URL</th><th>Taxonomy</th><th>Category</th><th>Contact Module<br>(Priority Code)</th><th>Contact Module Form)</th><th>Purchasable</th></tr>';
+					fulldata +='<tr><th>Sno</th><th>Product Name</th><th>Product URL</th><th>Taxonomy</th><th>Category</th><th>Contact Module<br>(Priority Code)</th><th>Other Contact Module Details</th><th>Purchasable</th></tr>';
 					var purchasable = "No";
 					var cntry_code = cntry.split("-");
 					cntry_code = cntry_code[0]+"_"+cntry_code[1].toUpperCase();
@@ -176,7 +180,9 @@ $(document).ready(function(){
 								}
 								if(typeof data["results"]["items"][i]["doc"]["contact"]!= 'undefined'){
 									fulldata += '<td>'+data["results"]["items"][i]["doc"]["contact"][cntry_code]["priority"]+'</td>';
-									fulldata += '<td>'+data["results"]["items"][i]["doc"]["contact"][cntry_code]["contact-web-form"]+'</td>';
+									fulldata += '<td>'+data["results"]["items"][i]["doc"]["contact"][cntry_code]["contact-web-form"]+'<br>'
+													  +data["results"]["items"][i]["doc"]["contact"][cntry_code]["live-chat"]+'<br>'
+													  +data["results"]["items"][i]["doc"]["contact"][cntry_code]["phone"]+'</td>';
 								}else{
 									fulldata += '<td></td><td></td>';
 								}
