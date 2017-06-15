@@ -20,6 +20,7 @@ td{padding:10px;}
 <body style="text-align:center;">
 <h1>Find Marketplace PDP list for a Country</h1>
 <h4>Enter "?" to list all pages (or) Category Listing URL (or) Search Term</h4>
+<div id="contacttoadd">GMC Contacts</div>
 <div id="inputdata" style="width:80%; padding:20px 10%; text-align:center; border:1px solid #CCC;background:#FFF9F9;font-size:14px;">
 <form id="urlparameters">
 <label><strong>Enter the Category Search URL</strong><br></label>Example: https://www.ibm.com/marketplace/search/sg/en-sg?category[]=Commerce<br>(or)<br>
@@ -52,6 +53,7 @@ td{padding:10px;}
 <option value="es-pe">SSA-Perú</option>
 <option value="fr-fr">Europe-France</option>
 <option value="de-de">Europe-Germany</option>
+<option value="en-de">Europe-Germany(English)</option>
 <option value="it-it">Europe-Italy</option>
 <option value="es-es">Europe-Spain</option>
 <option value="pt-br">Europe-Brazil</option>
@@ -60,7 +62,9 @@ td{padding:10px;}
 <option value="ru-ru">Europe-Russia</option>
 <option value="pl-pl">Europe-Portugal</option>
 <option value="en-uk">Europe-UK</option>
-<option value='pl-pl'>Europe-Poland</option>
+<option value='en-ie'>Europe-UKI-Ireland</option>
+<option value='en-ch'>Europe-Switzerland</option>
+<option value='en-at'>Europe-Austria</option>
 <option value="en-nl">Europe-Netherlands</option>
 <option value="en-be">Europe-Belgium</option>
 <option value="en-lu">Europe-Lexumburg</option>
@@ -72,11 +76,11 @@ td{padding:10px;}
 <option value='en-cz'>Europe-CEE-Czech Republic</option>
 <option value='en-hu'>Europe-CEE-Hungary</option>
 <option value='en-az'>Europe-CEE-Azerbaijan</option>
+<option value='pl-pl'>Europe-CEE-Poland</option>
 <option value='en-no'>Europe-Nordics-Norway</option>
 <option value='en-fi'>Europe-Nordics-Finland</option>
 <option value='en-dk'>Europe-Nordics-Denmark</option>
 <option value='en-se'>Europe-Nordics-Sweden</option>
-<option value='en-ie'>Europe-UKI-Ireland</option>
 <option value="en-us">NA-USA</option>
 <option value="en-ca">NA-Canada(English)</option>
 <option value="fr-ca">NA-Canada(french)</option>
