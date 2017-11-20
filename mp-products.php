@@ -178,12 +178,14 @@ $(document).ready(function(){
 									fulldata+= '<td></td>';
 								}
 								if(typeof data["results"]["items"][i]["doc"]["call-to-action-secondary"]!= 'undefined'){
-									var urxval = "";
-									if(data["results"]["items"][i]["doc"]["call-to-action-secondary"]["url"]==""){
-									urxval = "URXForm:"+data["results"]["items"][i]["doc"]["call-to-action-secondary"]["urx-form"]}
-									else{urxval = "URL:"+data["results"]["items"][i]["doc"]["call-to-action-secondary"]["url"]}
-									
-									fulldata += '<td>'+"CTA: "+data["results"]["items"][i]["doc"]["call-to-action-secondary"]["label"]+ '<br>'+urxval+'</td>';
+									if(data["results"]["items"][i]["doc"]["call-to-action-secondary"]["label"] != ""){
+										var urxval = "";
+										if(data["results"]["items"][i]["doc"]["call-to-action-secondary"]["url"]==""){
+										urxval = "URXForm:"+data["results"]["items"][i]["doc"]["call-to-action-secondary"]["urx-form"]}
+										else{urxval = "URL:"+data["results"]["items"][i]["doc"]["call-to-action-secondary"]["url"]}
+										
+										fulldata += '<td>'+"CTA: "+data["results"]["items"][i]["doc"]["call-to-action-secondary"]["label"]+ '<br>'+urxval+'</td>';
+									}
 								}else{
 									fulldata+= '<td></td>';
 								}
@@ -210,6 +212,7 @@ $(document).ready(function(){
 									fulldata += '<td></td><td></td>';
 								}
 								if(typeof data["results"]["items"][i]["doc"]["call-to-action-primary"]!= 'undefined'){
+									
 									var urxval = "";
 									if(data["results"]["items"][i]["doc"]["call-to-action-primary"]["url"]==""){
 									urxval = "URXForm:"+data["results"]["items"][i]["doc"]["call-to-action-primary"]["urx-form"]}
@@ -220,12 +223,14 @@ $(document).ready(function(){
 									fulldata+= '<td></td>';
 								}
 								if(typeof data["results"]["items"][i]["doc"]["call-to-action-secondary"]!= 'undefined'){
-									var urxval = "";
-									if(data["results"]["items"][i]["doc"]["call-to-action-secondary"]["url"]==""){
-									urxval = "URXForm:"+data["results"]["items"][i]["doc"]["call-to-action-secondary"]["urx-form"]}
-									else{urxval = "URL:"+data["results"]["items"][i]["doc"]["call-to-action-secondary"]["url"]}
-									
-									fulldata += '<td>'+"CTA: "+data["results"]["items"][i]["doc"]["call-to-action-secondary"]["label"]+ '<br>'+urxval+'</td>';
+									if(data["results"]["items"][i]["doc"]["call-to-action-secondary"]["label"] != ""){
+										var urxval = "";
+										if(data["results"]["items"][i]["doc"]["call-to-action-secondary"]["url"]==""){
+										urxval = "URXForm:"+data["results"]["items"][i]["doc"]["call-to-action-secondary"]["urx-form"]}
+										else{urxval = "URL:"+data["results"]["items"][i]["doc"]["call-to-action-secondary"]["url"]}
+										
+										fulldata += '<td>'+"CTA: "+data["results"]["items"][i]["doc"]["call-to-action-secondary"]["label"]+ '<br>'+urxval+'</td>';
+									}
 								}else{
 									fulldata+= '<td></td>';
 								}
