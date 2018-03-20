@@ -26,7 +26,6 @@ td{padding:10px;}
 <label><strong>Enter the Search Term URL</strong><br></label>Example: https://www.ibm.com/marketplace/search/sg/en-sg?terms=watson<br>
 <input id="parameters" type="text" value="?" style="width:100%;" /><br><br>
 <label>Select country</label><br>
-<label>Select country</label><br>
 <select id="country">
 <!--AP-->
 <option value="0">Select Country</option>
