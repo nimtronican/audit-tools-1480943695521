@@ -1,5 +1,5 @@
 var base_url = "http://localhost/gateway_main.php";
-var base_url = "ibmnowtestapi.mybluemix.net/gateway_main.php";
+var base_url = "http://ibmnowtestapi.mybluemix.net/gateway_main.php";
 ibmbox = {};
 ibmbox.util = {};
 ibmbox.util.doFeed = {
