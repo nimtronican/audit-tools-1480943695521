@@ -8,8 +8,8 @@
 <body>
 <button onclick="ibmbox.util.doFeed.doAPI009();" style="background:#FF0">2-1.check_user_login</button>
 <button onclick="ibmbox.util.doFeed.doAPI005();" style="background:#FF0">2-2.create_customer_event_record</button>
-<button onclick="ibmbox.util.doFeed.doAPI010();" style="background:#FF0">2-3.get_customer_profile</button>
-<button onclick="ibmbox.util.doFeed.doAPI022();" style="background:#FF0">2-3.get_user_allprofile_pinmicro</button>
+<button onclick="ibmbox.util.doFeed.doAPI022();" style="background:#FF0">2-3.get_customer_profile</button>
+<button onclick="ibmbox.util.doFeed.doAPI010();" style="background:#FF0">2-3.get_user_allprofile_pinmicro</button>
 <button onclick="ibmbox.util.doFeed.doAPI004();" style="background:#FF0">2-4.get_customer_program_session_application</button>
 <br />
 <button onclick="ibmbox.util.doFeed.doAPI012();" style="background:#FF0">2-5.get_exhibitionsessionList</button>
